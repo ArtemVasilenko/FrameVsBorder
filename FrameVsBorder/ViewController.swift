@@ -10,6 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var myImageView: UIImageView = {
+        let image = UIImage(named: "mario")
+        let imageView = UIImageView(image: image)
+        
+        
+        return imageView
+    }()
     
     @IBOutlet weak var myView: UIView!
     @IBOutlet weak var upView: UIView!
@@ -41,7 +48,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        myImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        myImageView.contentMode = .scaleToFill
+        myView.addSubview(myImageView)
     }
     
     private func updateLabels() {
@@ -78,19 +87,19 @@ class ViewController: UIViewController {
         updateLabels()
     }
     @IBAction func boundsXSliderChanged(sender: AnyObject) {
-        myView.bounds.origin.x = CGFloat(boundsXSlider.value)
+        myView.bounds.origin.x = CGFloat(boundsXSlider.value) * myView.bounds.width
         updateLabels()
     }
     @IBAction func boundsYSliderChanged(sender: AnyObject) {
-        myView.bounds.origin.y = CGFloat(boundsYSlider.value)
+        myView.bounds.origin.y = CGFloat(boundsYSlider.value) * myView.bounds.height
         updateLabels()
     }
     @IBAction func boundsWidthSliderChanged(sender: AnyObject) {
-        myView.bounds.size.width = CGFloat(boundsWidthSlider.value)
+        myView.bounds.size.width = CGFloat(boundsWidthSlider.value) * myView.bounds.width
         updateLabels()
     }
     @IBAction func boundsHeightSliderChanged(sender: AnyObject) {
-        myView.bounds.size.height = CGFloat(frameHeightSlider.value)
+        myView.bounds.size.height = CGFloat(frameHeightSlider.value) * myView.bounds.height
         updateLabels()
     }
     @IBAction func centerXSliderChanged(sender: AnyObject) {
@@ -102,7 +111,7 @@ class ViewController: UIViewController {
         updateLabels()
     }
     @IBAction func rotationSliderChanged(sender: AnyObject) {
-        let rotation = CGAffineTransform(rotationAngle: CGFloat(rotationSlider.value))
+        let rotation = CGAffineTransform(rotationAngle: CGFloat(rotationSlider.value * 2 * .pi))
         myView.transform = rotation
         updateLabels()
     }
